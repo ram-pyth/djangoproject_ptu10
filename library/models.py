@@ -1,4 +1,5 @@
 import uuid
+
 from django.db import models
 
 
@@ -6,6 +7,9 @@ from django.db import models
 class Author(models.Model):
     first_name = models.CharField("Vardas", max_length=100)
     last_name = models.CharField("Pavardė", max_length=100)
+
+    class Meta:
+        ordering = ['last_name', 'first_name']
 
     def __str__(self):
         return f"{self.last_name}, {self.first_name}"
@@ -51,8 +55,10 @@ class BookInstance(models.Model):
         default='a',
         help_text="Leidinio kopijos statusas"
     )
-    book_id = models.ForeignKey(Book, on_delete=models.SET_NULL,null=True)
+    book_id = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        ordering = ['due_back']
 
     def __str__(self):
         return f"{self.id} {self.book_id.title}"
-

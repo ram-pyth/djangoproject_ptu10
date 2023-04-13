@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 
 
@@ -29,3 +30,29 @@ class Genre(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+
+class BookInstance(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unikalus ID leidinio kopijai")
+    due_back = models.DateField("Bus prieinama", null=True, blank=True)
+
+    LOAN_STATUS = (
+        ('a', 'Administruojama'),
+        ('p', 'Paimta'),
+        ('g', 'Galima paimti'),
+        ('r', 'Rezervuota')
+    )
+
+    status = models.CharField(
+        "Statusas",
+        max_length=1,
+        choices=LOAN_STATUS,
+        blank=True,
+        default='a',
+        help_text="Leidinio kopijos statusas"
+    )
+    book_id = models.ForeignKey(Book, on_delete=models.SET_NULL,null=True)
+
+    def __str__(self):
+        return f"{self.id} {self.book_id.title}"
+

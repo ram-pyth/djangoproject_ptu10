@@ -13,6 +13,11 @@ class Author(models.Model):
     def __str__(self):
         return f"{self.last_name}, {self.first_name}"
 
+    def display_books(self):
+        return ', '.join(book.title for book in self.books_rn.all()[:3])
+
+    display_books.short_description = "Autoriaus knygos"
+
 
 class Book(models.Model):
     title = models.CharField("Pavadinimas", max_length=200)
@@ -21,7 +26,7 @@ class Book(models.Model):
                             max_length=13,
                             help_text="13 simbolių <a href='https://www.isbn-international.org/"
                                       "content/what-isbn'>ISBN kodas</a>")
-    author_id = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
+    author_id = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, related_name='books_rn')
     genre_id = models.ManyToManyField("Genre", help_text="Išrinkite žanrą/us šiai knygai")
 
     def __str__(self):

@@ -3,7 +3,6 @@ import uuid
 from django.db import models
 
 
-# Create your models here.
 class Author(models.Model):
     first_name = models.CharField("Vardas", max_length=100)
     last_name = models.CharField("Pavardė", max_length=100)
@@ -28,9 +27,18 @@ class Book(models.Model):
     def __str__(self):
         return f"{self.title}"
 
+    def display_genre(self):
+        return ', '.join([genre.name for genre in self.genre_id.all()][:3])
+
+    display_genre.short_description = 'Žanras'
+
 
 class Genre(models.Model):
     name = models.CharField("Žanro pavadinimas", max_length=50, help_text="Įveskite žanrą")
+
+    class Meta:
+        verbose_name = "Žanras"
+        verbose_name_plural = "Žanrai"
 
     def __str__(self):
         return f"{self.name}"

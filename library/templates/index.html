@@ -1,18 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Title</title>
-  </head>
-  <body>
-    <h1>Rajono biblioteka</h1>
-    <p>Sveiki atvykę į knygų rojų!</p>
-    <p>Šiuo metu turime:</p>
-    <ul>
-      <li>Knygų: {{ num_books_cntx }}</li>
-      <li>Egzempliorių: {{ num_instances_cntx }}</li>
-      <li>Laisvų egzempliorių: {{ num_inst_avail_cntx }}</li>
-      <li>Autorių: {{ num_authors_cntx }}</li>
-    </ul>
-  </body>
-</html>
+{% extends "base.html" %} {% block content %}
+<h1>Rajono biblioteka</h1>
+<p>Sveiki atvykę į knygų rojų!</p>
+<p>Šiuo metu turime:</p>
+<ul>
+  <li>Knygų: {{ num_books_cntx }}</li>
+  <li>Egzempliorių: {{ num_instances_cntx }}</li>
+  <li>Laisvų egzempliorių: {{ num_inst_avail_cntx }}</li>
+  <li>Autorių: {{ num_authors_cntx }}</li>
+</ul>
+{% endblock %}

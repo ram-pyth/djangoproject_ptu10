@@ -14,6 +14,7 @@
     />
     <!-- Add additional CSS in static file -->
     {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
   </head>
   <body>
@@ -24,7 +25,7 @@
           <ul class="sidebar-nav">
             <li><a href="{% url 'index_n' %}">Pradžia</a></li>
             <li><a href="">Visos knygos</a></li>
-            <li><a href="">Visi autoriai</a></li>
+            <li><a href="{% url 'authors_n' %}">Visi autoriai</a></li>
           </ul>
           {% endblock %}
         </div>

@@ -20,3 +20,15 @@ def index(request):
     }
 
     return render(request, 'index.html', context=data)
+
+
+def authors(request):
+    # išrenkam visus autorius iš authors lentelės
+    authors = Author.objects.all()
+
+    # žodynas skirtas duomenų perdavimui į šabloną
+    data = {
+        'authors_cntx': authors
+    }
+
+    return render(request, 'authors.html', context=data)

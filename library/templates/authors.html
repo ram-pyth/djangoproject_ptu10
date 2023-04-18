@@ -3,7 +3,7 @@
 <p>Mūsų autorių sąrašas:</p>
 {% for author_obj in authors_cntx %}
 <li>
-  <a href="{% url 'author_n' author_obj.id %}"
+    <a href="{% url 'author_n' author_obj.id %}"
     >{{ author_obj.first_name }} {{ author_obj.last_name }}</a>
 </li>
 {% endfor %} {% endblock %}

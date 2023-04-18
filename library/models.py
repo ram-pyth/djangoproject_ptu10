@@ -54,6 +54,7 @@ class BookInstance(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unikalus ID leidinio kopijai")
     due_back = models.DateField("Bus prieinama", null=True, blank=True)
 
+
     LOAN_STATUS = (
         ('a', 'Administruojama'),
         ('p', 'Paimta'),

@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.views import generic
 
 from .models import Book, BookInstance, Author
 
@@ -40,3 +41,11 @@ def author(request, author_id):
         'author_cntx': single_author
     }
     return render(request, 'author.html', context=data)
+
+
+class BookListView(generic.ListView):
+    model = Book
+    context_object_name = 'book_list'  # konteksto kintamasis, pavadinimas yra defaultinis
+    # formuojamas iš modelio ir generis klasės pavadinimų
+    # kodas veiktų ir be šios eilutės
+    template_name = "book_list.html"

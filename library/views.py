@@ -49,3 +49,10 @@ class BookListView(generic.ListView):
     # formuojamas iš modelio ir generis klasės pavadinimų
     # kodas veiktų ir be šios eilutės
     template_name = "book_list.html"
+
+
+class BookDetailView(generic.DetailView):
+    model = Book
+    context_object_name = 'book' # šios eilutės nereikia, kontexto kintamasis taip pavadinamas
+    # automatiškai, pagal model
+    template_name = "book_detail.html"

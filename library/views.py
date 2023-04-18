@@ -56,3 +56,22 @@ class BookDetailView(generic.DetailView):
     context_object_name = 'book' # šios eilutės nereikia, kontexto kintamasis taip pavadinamas
     # automatiškai, pagal model
     template_name = "book_detail.html"
+
+
+class RookListView(generic.ListView):
+    model = Book
+    context_object_name = 'book_list'  # konteksto kintamasis, pavadinimas yra defaultinis
+    # formuojamas iš modelio ir generis klasės pavadinimų
+    # kodas veiktų ir be šios eilutės
+    # queryset = Book.objects.filter(title__icontains="python")
+    # def get_queryset(self):
+    #     return Book.objects.filter(title__icontains="django")
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['laikinas_kint'] = "Hello iš perdaryto contexto"
+        return context
+
+    template_name = "book_list.html"
+
+
+

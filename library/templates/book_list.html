@@ -1,10 +1,10 @@
 {% extends "base.html" %} {% block content %}
-<h1>Knygų sąrašas:</h1>
+<h1>Knygų sąrašas:  {{ laikinas_kint }}</h1>
 {% if book_list %}
 <ul>
   {% for book_obj in book_list %}
   <li>
-    <a href="{{ book_obj.id }}">{{ book_obj.title }}</a> {{ book_obj.author_id }} </li>
+    <a href="{% url 'book-detail_n' book_obj.id %}">{{ book_obj.title }}</a> {{ book_obj.author_id }} </li>
   {% endfor %}
 </ul>
 {% else %}

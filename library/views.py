@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 
@@ -45,6 +46,7 @@ def author(request, author_id):
 
 class BookListView(generic.ListView):
     model = Book
+    paginate_by = 3  # puslapiavimas, sukuriamas page_obj šablonui ir išdalinimas po 3 objektus(knygas)
     context_object_name = 'book_list'  # konteksto kintamasis, pavadinimas yra defaultinis
     # formuojamas iš modelio ir generis klasės pavadinimų
     # kodas veiktų ir be šios eilutės
@@ -53,14 +55,17 @@ class BookListView(generic.ListView):
 
 class BookDetailView(generic.DetailView):
     model = Book
-    context_object_name = 'book' # šios eilutės nereikia, kontexto kintamasis taip pavadinamas
+    context_object_name = 'book'  # šios eilutės nereikia, kontexto kintamasis taip pavadinamas
     # automatiškai, pagal model
     template_name = "book_detail.html"
 
 
 def search(request):
     query_text = request.GET['search_text']
-    query_result = Book.objects.filter(title__icontains=query_text)
+    query_result = Book.objects.filter(
+        Q(title__icontains=query_text) |
+        Q(summary__icontains=query_text)
+    )  # Q objektas, kai reikia sudėtingesnės paieškos su OR sąlyga
     data = {'query_text_cntx': query_text,
             'query_result_cntx': query_result}
     return render(request, "search.html", context=data)

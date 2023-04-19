@@ -5,7 +5,7 @@
 <ul>
     {% for book_obj in query_result_cntx %}
     <li>
-        {{ book_obj.title }}, {{ book_obj.author_id }}
+        <a href="{% url 'book-detail_n' book_obj.id %}">{{ book_obj.title }}</a>, {{ book_obj.author_id }}
     </li>
     {% endfor %}
 </ul>

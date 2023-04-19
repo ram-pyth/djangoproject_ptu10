@@ -56,3 +56,11 @@ class BookDetailView(generic.DetailView):
     context_object_name = 'book' # šios eilutės nereikia, kontexto kintamasis taip pavadinamas
     # automatiškai, pagal model
     template_name = "book_detail.html"
+
+
+def search(request):
+    query_text = request.GET['search_text']
+    query_result = Book.objects.filter(title__icontains=query_text)
+    data = {'query_text_cntx': query_text,
+            'query_result_cntx': query_result}
+    return render(request, "search.html", context=data)

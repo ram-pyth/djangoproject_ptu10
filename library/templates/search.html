@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block content %}
+<h1>Paieškos pagal "{{ query_text_cntx }}" rezultatai:</h1>
+<hr/>
+{% if query_result_cntx %}
+<ul>
+    {% for book_obj in query_result_cntx %}
+    <li>
+        {{ book_obj.title }}, {{ book_obj.author_id }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Nieko nerasta...</p>
+{% endif %}
+{% endblock %}

@@ -6,4 +6,25 @@
     <a href="{% url 'author_n' author_obj.id %}"
     >{{ author_obj.first_name }} {{ author_obj.last_name }}</a>
 </li>
-{% endfor %} {% endblock %}
+{% endfor %}
+<div class="container">
+    <br>
+    <nav>
+        {% if authors_cntx.has_other_pages %}
+            <ul class="pagination pagination-sm">
+                {% for page in authors_cntx.paginator.page_range %}
+                    {% if authors_cntx.number == page %}
+                        <li class="page-item active">
+                            <a class="page-link" href="">{{ page }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </nav>
+</div>
+{% endblock %}

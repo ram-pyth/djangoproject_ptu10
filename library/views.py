@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
+from django.core.paginator import Paginator
 
 from .models import Book, BookInstance, Author
 
@@ -25,12 +26,14 @@ def index(request):
 
 
 def authors(request):
-    # išrenkam visus autorius iš authors lentelės
-    authors = Author.objects.all()
+    # išrenkam visus autorius iš authors lentelės, supuslapiuojam
+    paginator = Paginator(Author.objects.all(), 3)
+    page_number = request.GET.get('page')
+    paged_authors = paginator.get_page(page_number)
 
     # žodynas skirtas duomenų perdavimui į šabloną
     data = {
-        'authors_cntx': authors
+        'authors_cntx': paged_authors
     }
 
     return render(request, 'authors.html', context=data)

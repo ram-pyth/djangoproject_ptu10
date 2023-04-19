@@ -29,6 +29,7 @@ class Book(models.Model):
                                       "content/what-isbn'>ISBN kodas</a>")
     author_id = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, related_name='books_rn')
     genre_id = models.ManyToManyField("Genre", help_text="Išrinkite žanrą/us šiai knygai")
+    cover = models.ImageField("Viršelis", upload_to="covers", null=True)
 
     def __str__(self):
         return f"{self.title}"

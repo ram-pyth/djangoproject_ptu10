@@ -49,7 +49,7 @@ def author(request, author_id):
 
 class BookListView(generic.ListView):
     model = Book
-    paginate_by = 3  # puslapiavimas, sukuriamas page_obj šablonui ir išdalinimas po 3 objektus(knygas)
+    paginate_by = 5  # puslapiavimas, sukuriamas page_obj šablonui ir išdalinimas po 3 objektus(knygas)
     context_object_name = 'book_list'  # konteksto kintamasis, pavadinimas yra defaultinis
     # formuojamas iš modelio ir generis klasės pavadinimų
     # kodas veiktų ir be šios eilutės

@@ -22,7 +22,7 @@
 {% if book_list %}
 <div class="row">
     {% for book_obj in book_list %}
-    <div class="col-md-4 d-flex align-items-stretch">
+    <div class="col-sm-6 col-md-3 d-flex align-items-stretch">
         <div class="card mb-4 shadow-sm">
             {% if book_obj.cover %}
             <img src="{{ book_obj.cover.url }}" class="card-img-top">

@@ -14,12 +14,15 @@ def index(request):
 
     num_instances_available = BookInstance.objects.filter(status__exact='g').count()
 
+    num_visits = request.session.get('num_visits', 1)
+    request.session['num_visits'] = num_visits + 1
     # žodynas skirtas duomenų perdavimui į šabloną
     data = {
         'num_books_cntx': num_books,
         'num_instances_cntx': num_instances,
         'num_authors_cntx': num_authors,
-        'num_inst_avail_cntx': num_instances_available
+        'num_inst_avail_cntx': num_instances_available,
+        'num_visits_cntx': num_visits
     }
 
     return render(request, 'index.html', context=data)

@@ -1,6 +1,10 @@
 import uuid
 
 from django.db import models
+from django.contrib.auth.models import User
+from django.urls import reverse
+
+from datetime import date
 
 
 class Author(models.Model):
@@ -19,6 +23,10 @@ class Author(models.Model):
 
     display_books.short_description = "Autoriaus knygos"
 
+    def get_absolute_url(self):
+        return reverse('author_n', args=[str(self.id)])
+
+
 
 class Book(models.Model):
     title = models.CharField("Pavadinimas", max_length=200)
@@ -29,7 +37,7 @@ class Book(models.Model):
                                       "content/what-isbn'>ISBN kodas</a>")
     author_id = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, related_name='books_rn')
     genre_id = models.ManyToManyField("Genre", help_text="Išrinkite žanrą/us šiai knygai")
-    cover = models.ImageField("Viršelis", upload_to="covers", null=True)
+    cover = models.ImageField("Viršelis", upload_to="covers", null=True, blank=True)
 
     def __str__(self):
         return f"{self.title}"
@@ -38,6 +46,9 @@ class Book(models.Model):
         return ', '.join([genre.name for genre in self.genre_id.all()][:3])
 
     display_genre.short_description = 'Žanras'
+
+    def get_absolute_url(self):
+        return reverse('book-detail_n', args=[str(self.id)])
 
 
 class Genre(models.Model):
@@ -72,6 +83,14 @@ class BookInstance(models.Model):
         help_text="Leidinio kopijos statusas"
     )
     book_id = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
+    reader = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
+    @property
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True
+        else:
+            return False
 
     class Meta:
         ordering = ['due_back']

@@ -22,14 +22,15 @@ class BookAdmin(admin.ModelAdmin):
 
 
 class BookInstanceAdmin(admin.ModelAdmin):
-    list_display = ('book_id', 'status', 'due_back')
+    list_display = ('book_id', 'reader', 'status', 'due_back')
+    list_editable = ('reader', 'status', 'due_back')
     list_filter = ('status', 'due_back')
     search_fields = ('id', 'book_id__title')  # book_id - FK iš BookInstance į Book, title - book laukas
     # pagal kurį norime ieškoti abu laukai jungiami __
 
     fieldsets = (
         ('Bendra info', {'fields': ('id', 'book_id')}),
-        ('Prieinamumas', {'fields': ('status', 'due_back')})
+        ('Prieinamumas', {'fields': ('status', 'due_back', 'reader')})
     )
 
 

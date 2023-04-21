@@ -4,13 +4,16 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+from tinymce.models import HTMLField
+
 from datetime import date
 
 
 class Author(models.Model):
     first_name = models.CharField("Vardas", max_length=100)
     last_name = models.CharField("Pavardė", max_length=100)
-    description = models.TextField("Aprašymas", max_length=2000, default="Žinomas autorius")
+    # description = models.TextField("Aprašymas", max_length=2000, default="Žinomas autorius")
+    description = HTMLField(default="Žinomas autorius")
 
     class Meta:
         ordering = ['last_name', 'first_name']

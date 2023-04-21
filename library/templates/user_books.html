@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Mano paimtos knygos</h1>
+
+{% if bookinstance_list %}
+<ul>
+
+    {% for bookinst_obj in bookinstance_list %}
+    <li class="{% if bookinst_obj.is_overdue %}text-danger{% else %}text-muted{% endif %}">
+        <a href="{% url 'book-detail_n' bookinst_obj.book_id.id %}">{{ bookinst_obj.book_id.title}}</a>
+        {{ bookinst_obj.due_back }}
+    </li>
+    {% endfor %}
+
+</ul>
+
+{% else %}
+<p>Šiuo metu jūs nesate paėmęs knygų.</p>
+{% endif %}
+
+{% endblock %}

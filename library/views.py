@@ -2,6 +2,7 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.core.paginator import Paginator
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Book, BookInstance, Author
 
@@ -75,3 +76,14 @@ def search(request):
     data = {'query_text_cntx': query_text,
             'query_result_cntx': query_result}
     return render(request, "search.html", context=data)
+
+
+class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
+    model = BookInstance
+    context_object_name = 'bookinstance_list'  # nebūtina, tokį pavadinimą kontekste django sukuria automatiškai
+    template_name = 'user_books.html'
+    paginate_by = 5
+
+    def get_queryset(self):
+        query = BookInstance.objects.filter(reader=self.request.user).filter(status__exact='p').order_by('due_back')
+        return query

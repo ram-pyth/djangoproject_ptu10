@@ -125,11 +125,16 @@ LOGIN_REDIRECT_URL = "/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # email settingai
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_POST = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'mano_pastas@gmail.com'
-# # el. pašto adresas iš kurio siųsite
-# EMAIL_HOST_PASSWORD = 'VerySecret'
-# slaptažodis
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+from .secret import EMAIL_HOST, EMAIL_HOST_PASSWORD, EMAIL_USER
+
+DEFAULT_FROM_EMAIL = EMAIL_USER
+
+EMAIL_HOST = EMAIL_HOST
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = EMAIL_USER
+EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
+

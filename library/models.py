@@ -100,3 +100,15 @@ class BookInstance(models.Model):
 
     def __str__(self):
         return f"{self.id} {self.book_id.title}"
+
+
+class BookReview(models.Model):
+    date_created = models.DateTimeField(auto_now_add=True)
+    content = models.TextField("Atsiliepimas", max_length=2000)
+    book_id = models.ForeignKey('Book', on_delete=models.CASCADE, null=True, blank=True)
+    reviewer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Asiliepimas"
+        verbose_name_plural = "Atsiliepimai"
+        ordering = ['date_created']

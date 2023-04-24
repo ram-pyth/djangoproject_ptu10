@@ -3,10 +3,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views import generic
 from django.views.decorators.csrf import csrf_protect
 
+from .forms import BookReviewForm
 from .models import Book, BookInstance, Author
 
 
@@ -63,11 +64,32 @@ class BookListView(generic.ListView):
     template_name = "book_list.html"
 
 
-class BookDetailView(generic.DetailView):
+class BookDetailView(generic.edit.FormMixin, generic.DetailView):
     model = Book
     context_object_name = 'book'  # šios eilutės nereikia, kontexto kintamasis taip pavadinamas
     # automatiškai, pagal model
     template_name = "book_detail.html"
+    form_class = BookReviewForm
+
+    # nurodome kur pateksim po formos submitinimo
+    def get_success_url(self):
+        return reverse('book-detail_n', kwargs={'pk': self.object.id})
+
+    # post metodas mūsų pakeistas
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    #
+    def form_valid(self, form):
+        form.instance.book_id = self.object
+        form.instance.reviewer = self.request.user
+        form.save()
+        return super().form_valid(form)
 
 
 def search(request):

@@ -29,6 +29,7 @@
     {% if book.bookreview_set.all %}
         {% for review_obj in book.bookreview_set.all %}
         <hr>
+        <img src="{{review_obj.reviewer.profilis.nuotrauka.url}}" class="img-fluid rounded-circle" style="width: 50px; height: 50px;">
         <strong>{{ review_obj.reviewer }}</strong>, <em>{{ review_obj.date_created }}</em>
         <p>{{ review_obj.content }}</p>
         {% endfor %}

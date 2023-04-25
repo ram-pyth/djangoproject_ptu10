@@ -47,3 +47,7 @@ admin.site.register(Book, BookAdmin)
 admin.site.register(Genre)
 admin.site.register(BookInstance, BookInstanceAdmin)
 admin.site.register(BookReview, BookReviewAdmin)
+
+from .models import Author, Genre, Book, BookInstance, BookReview, Profilis
+
+admin.site.register(Profilis)

@@ -105,10 +105,18 @@ class BookInstance(models.Model):
 class BookReview(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     content = models.TextField("Atsiliepimas", max_length=2000)
-    book_id = models.ForeignKey('Book', on_delete=models.CASCADE, null=True, blank=True)
+    book_id = models.ForeignKey('Book', on_delete=models.CASCADE)
     reviewer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     class Meta:
         verbose_name = "Asiliepimas"
         verbose_name_plural = "Atsiliepimai"
         ordering = ['date_created']
+
+
+class Profilis(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    nuotrauka = models.ImageField(default="profile_pics/default.png", upload_to="profile_pics")
+
+    def __str__(self):
+        return f"{self.user.username} profilis"

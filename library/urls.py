@@ -9,6 +9,7 @@ urlpatterns = [
     path("books/<int:pk>", views.BookDetailView.as_view(), name='book-detail_n'),
     path("search/", views.search, name='search_n'),
     path("mybooks/", views.LoanedBooksByUserListView.as_view(), name='my-borrowed_n'),
+    path("profilis/", views.profilis, name='profilis_n')
 ]
 
 urlpatterns = urlpatterns + [

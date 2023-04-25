@@ -106,7 +106,7 @@ class BookInstance(models.Model):
 class BookReview(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     content = models.TextField("Atsiliepimas", max_length=2000)
-    book_id = models.ForeignKey('Book', on_delete=models.CASCADE)
+    book_id = models.ForeignKey('Book', on_delete=models.CASCADE, blank=True)
     reviewer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     class Meta:

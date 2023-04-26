@@ -17,6 +17,7 @@
 
     <li class="{% if object.is_overdue %}text-danger
            {% else %}text-muted{% endif %}">{{ object.due_back }}</li>
+    <li>{{ object.book_id.title }},  {{ object.book_id.author_id }} - {{ object.id }}</li>
 </ul>
 
 

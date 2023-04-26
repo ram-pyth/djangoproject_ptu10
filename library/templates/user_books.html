@@ -8,8 +8,12 @@
 
     {% for bookinst_obj in bookinstance_list %}
     <li class="{% if bookinst_obj.is_overdue %}text-danger{% else %}text-muted{% endif %}">
-        <a href="{% url 'my-book_n' bookinst_obj.id %}">{{ bookinst_obj.book_id.title}}</a>
-        {{ bookinst_obj.due_back }}
+        {{ bookinst_obj.book_id.title}} - {{ bookinst_obj.due_back }}
+    </li>
+    <li>
+        <a class="btn btn-sm btn-primary" href="{% url 'my-book_n' bookinst_obj.id %}" role="button">
+            Peržiūrėti
+        </a>
     </li>
     {% endfor %}
 

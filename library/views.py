@@ -170,3 +170,17 @@ def profilis(request):
     }
 
     return render(request, "profilis.html", context=data)
+
+
+class BookByUserCreateView(LoginRequiredMixin, generic.CreateView):
+    model = BookInstance
+    fields = ['book_id', 'due_back', 'status']
+    success_url = "/library/mybooks"
+    template_name = "user_book_form.html"
+
+    def form_valid(self, form):
+        form.instance.reader = self.request.user
+        # form.instance.status = 'p'
+        return super().form_valid(form)
+
+

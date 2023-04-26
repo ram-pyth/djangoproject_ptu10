@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -182,5 +182,32 @@ class BookByUserCreateView(LoginRequiredMixin, generic.CreateView):
         form.instance.reader = self.request.user
         # form.instance.status = 'p'
         return super().form_valid(form)
+
+
+class BookByUserUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    model = BookInstance
+    fields = ['book_id', 'due_back', 'status']
+    success_url = "/library/mybooks"
+    template_name = "user_book_form.html"
+
+    def form_valid(self, form):
+        form.instance.reader = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        bookinstance = self.get_object()
+        return self.request.user == bookinstance.reader
+
+
+class BookByUserDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    model = BookInstance
+    success_url = "/library/mybooks"
+    template_name = "user_book_delete.html"
+
+    def test_func(self):
+        bookinstance = self.get_object()
+        return self.request.user == bookinstance.reader
+
+
 
 

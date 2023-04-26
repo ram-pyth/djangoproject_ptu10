@@ -15,3 +15,7 @@
     height: 75%;
     object-fit: contain;
 }
+
+.navbar {
+    white-space: nowrap;
+}

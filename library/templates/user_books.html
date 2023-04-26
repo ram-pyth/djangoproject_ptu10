@@ -5,7 +5,6 @@
 <img class="rounded-circle" src="{{ user.profilis.nuotrauka.url }}">
 {% if bookinstance_list %}
 <ul>
-
     {% for bookinst_obj in bookinstance_list %}
     <li class="{% if bookinst_obj.is_overdue %}text-danger{% else %}text-muted{% endif %}">
         {{ bookinst_obj.book_id.title}} - {{ bookinst_obj.due_back }}
@@ -14,11 +13,15 @@
         <a class="btn btn-sm btn-primary" href="{% url 'my-book_n' bookinst_obj.id %}" role="button">
             Peržiūrėti
         </a>
+        <a class="btn btn-sm btn-primary" href="{% url 'my-book-update_n' bookinst_obj.id %}" role="button">
+            Redaguoti
+        </a>
+        <a class="btn btn-sm btn-danger" href="{% url 'my-book-delete_n' bookinst_obj.id %}" role="button">
+            Ištrinti
+        </a>
     </li>
     {% endfor %}
-
 </ul>
-
 {% else %}
 <p>Šiuo metu jūs nesate paėmęs knygų.</p>
 {% endif %}

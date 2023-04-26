@@ -8,7 +8,7 @@
 
     {% for bookinst_obj in bookinstance_list %}
     <li class="{% if bookinst_obj.is_overdue %}text-danger{% else %}text-muted{% endif %}">
-        <a href="{% url 'book-detail_n' bookinst_obj.book_id.id %}">{{ bookinst_obj.book_id.title}}</a>
+        <a href="{% url 'my-book_n' bookinst_obj.id %}">{{ bookinst_obj.book_id.title}}</a>
         {{ bookinst_obj.due_back }}
     </li>
     {% endfor %}

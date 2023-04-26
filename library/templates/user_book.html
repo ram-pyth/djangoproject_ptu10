@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<img src="{{ object.reader.profilis.nuotrauka.url }}" class="img-fluid rounded-circle"
+         style="width: 100px; height: 100px;">
+<h3>Mano paimta knyga:</h3>
+<hr>
+<ul>
+    {% if object.book_id.cover %}
+    <img src="{{ object.book_id.cover.url }}" class="img-fluid"
+         style="width: 130px; height: 200px;">
+    {% else %}
+    <img src="{% static 'img/no-image.png' %}" class="img-fluid"
+         style="width: 130px; height: 200px;">
+    {% endif %}
+
+
+    <li class="{% if object.is_overdue %}text-danger
+           {% else %}text-muted{% endif %}">{{ object.due_back }}</li>
+</ul>
+
+
+
+{% endblock %}

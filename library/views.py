@@ -115,6 +115,11 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
         return query
 
 
+class BookByUserDetailView(LoginRequiredMixin, generic.DetailView):
+    model = BookInstance
+    template_name = 'user_book.html'
+
+
 @csrf_protect
 def register(request):
     if request.method == "POST":

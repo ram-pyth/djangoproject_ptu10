@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views import generic
 from django.views.decorators.csrf import csrf_protect
 
-from .forms import BookReviewForm, UserUpdateForm, ProfilisUpdateForm
+from .forms import BookReviewForm, UserUpdateForm, ProfilisUpdateForm, UserBookCreateForm
 from .models import Book, BookInstance, Author
 
 
@@ -174,9 +174,10 @@ def profilis(request):
 
 class BookByUserCreateView(LoginRequiredMixin, generic.CreateView):
     model = BookInstance
-    fields = ['book_id', 'due_back', 'status']
+    # fields = ['book_id', 'due_back', 'status']
     success_url = "/library/mybooks"
     template_name = "user_book_form.html"
+    form_class = UserBookCreateForm
 
     def form_valid(self, form):
         form.instance.reader = self.request.user
@@ -186,9 +187,10 @@ class BookByUserCreateView(LoginRequiredMixin, generic.CreateView):
 
 class BookByUserUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = BookInstance
-    fields = ['book_id', 'due_back', 'status']
+    # fields = ['book_id', 'due_back', 'status']
     success_url = "/library/mybooks"
     template_name = "user_book_form.html"
+    form_class = UserBookCreateForm
 
     def form_valid(self, form):
         form.instance.reader = self.request.user

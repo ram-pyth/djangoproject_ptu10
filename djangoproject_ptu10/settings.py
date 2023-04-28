@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -103,6 +104,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
+# LANGUAGE_CODE = "lt"
+
+from django.utils.translation import gettext_lazy as _
+LANGUAGES = (
+    ('en-us', _('English')),
+    ('lt', _('Lithuanian')),
+)
 
 TIME_ZONE = "Europe/Vilnius"
 

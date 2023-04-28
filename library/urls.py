@@ -14,6 +14,7 @@ urlpatterns = [
     path("mybooks/new", views.BookByUserCreateView.as_view(), name='my-borrowed-new_n'),
     path("mybooks/<uuid:pk>/update", views.BookByUserUpdateView.as_view(), name='my-book-update_n'),
     path("mybooks/<uuid:pk>/delete", views.BookByUserDeleteView.as_view(), name='my-book-delete_n'),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 
 urlpatterns = urlpatterns + [

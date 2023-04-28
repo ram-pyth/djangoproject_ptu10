@@ -3,6 +3,7 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from tinymce.models import HTMLField
 
@@ -11,8 +12,8 @@ from PIL import Image
 
 
 class Author(models.Model):
-    first_name = models.CharField("Vardas", max_length=100)
-    last_name = models.CharField("Pavardė", max_length=100)
+    first_name = models.CharField(_("First name"), max_length=100)
+    last_name = models.CharField(_("Last name"), max_length=100)
     # description = models.TextField("Aprašymas", max_length=2000, default="Žinomas autorius")
     description = HTMLField(default="Žinomas autorius")
 
@@ -25,7 +26,7 @@ class Author(models.Model):
     def display_books(self):
         return ', '.join(book.title for book in self.books_rn.all()[:3])
 
-    display_books.short_description = "Autoriaus knygos"
+    display_books.short_description = _("Authors books")
 
     def get_absolute_url(self):
         return reverse('author_n', args=[str(self.id)])

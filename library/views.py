@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views import generic
 from django.views.decorators.csrf import csrf_protect
+from django.utils.translation import gettext as _
 
 from .forms import BookReviewForm, UserUpdateForm, ProfilisUpdateForm, UserBookCreateForm
 from .models import Book, BookInstance, Author
@@ -30,7 +31,8 @@ def index(request):
         'num_inst_avail_cntx': num_instances_available,
         'num_visits_cntx': num_visits
     }
-
+    for k, v in request.META.items():
+        print(k, '======>', v)
     return render(request, 'index.html', context=data)
 
 
@@ -132,20 +134,20 @@ def register(request):
         if password == password2:
             # ar neužimtas username
             if User.objects.filter(username=username).exists():
-                messages.error(request, f"Vartotojo vardas {username} yra užimtas!!!")
+                messages.error(request, _("Username %s already exists!!!") % username)
                 return redirect('register_n')
             else:
                 # ar nėra sitemoj tokio pačio emailo
                 if User.objects.filter(email=email).exists():
-                    messages.error(request, f"Jau egzistuoja vartotojas su emailu {email}!!!")
+                    messages.error(request, _("Emailas %s already exists!!!") % email)
                     return redirect('register_n')
                 else:
                     # jei patikrinimai praėjo registruojam naują vartotoją
                     User.objects.create_user(username=username, email=email, password=password)
-                    messages.info(request, f"Vartotojas {username} užregistruotas!")
+                    messages.info(request,_("Registration of %s successful!!") % username)
                     return redirect('login')
         else:
-            messages.error(request, "Slaptažodžiai nesutampa!!!")
+            messages.error(request, _("Passwords do not match!!!"))
             return redirect('register_n')
     return render(request, "registration/register.html")
 

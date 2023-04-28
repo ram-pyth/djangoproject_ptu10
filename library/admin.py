@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Author, Book, Genre, BookInstance, BookReview , Profilis
+from .models import Author, Book, BookInstance, BookReview , Profilis, Genre
 
 
 class BookInstanceInline(admin.TabularInline):
